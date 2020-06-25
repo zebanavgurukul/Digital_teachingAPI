@@ -22,8 +22,16 @@ let Delete = (search_value) => {
 };
 
 // 4
+var root_node = (ID) => {
+    return knex("Teaching")
+    .join('Lessons','Teaching.ID','=','Lessons.ID')
+    .select("*")
+    .where('Lessons.ID',ID)
+};
+
+// 5
 let get_Data = () => {
     return knex.select('*').from('Lessons')
 }
 
-module.exports = {insert_data,getdata,insert_Lessons,Delete,get_Data}
+module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data}

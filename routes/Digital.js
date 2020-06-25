@@ -49,6 +49,18 @@ Digital.delete('/delete/:search_value',(req,res) => {
 });
 
 // 4
+Digital.get('/rootnode/:ID', (req,res) => {
+    var ID = req.params.ID
+    var data = DigitalDB.root_node(ID)
+    data.then((Response)=>{
+       res.json(Response)
+    }).catch((err)=>{
+       console.log(err)
+       res.send(err)
+    })
+ });
+
+// 5
 Digital.get('/getLessons', (req,res) => {
     DigitalDB.get_Data()
     .then((Res) => {
