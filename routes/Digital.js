@@ -37,5 +37,26 @@ Digital.post('/Lessonsinsert/:ID',(req,res) => {
     })
 });
 
+// 3
+Digital.delete('/delete/:search_value',(req,res) => {
+    var search_value = req.params.search_value
+    DigitalDB.Delete(search_value)
+    .then(() => {
+        res.send('......delete......')
+    }).catch((err) => {
+        res.send(err)
+    })
+});
+
+// 4
+Digital.get('/getLessons', (req,res) => {
+    DigitalDB.get_Data()
+    .then((Res) => {
+        res.send(Res)
+    }).catch((err) => {
+        res.send(err)
+    })
+});
+
 module.exports = Digital
 
