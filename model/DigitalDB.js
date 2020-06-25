@@ -34,4 +34,20 @@ let get_Data = () => {
     return knex.select('*').from('Lessons')
 }
 
-module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data}
+// 6
+
+// 7
+let moveToCart_ID = (ID) => {
+    return knex('Lessons').where("ID",ID)
+};
+
+let moveToCart = (updataData) => {
+    return knex('parent').insert(updataData)
+};
+
+let moveToCartdel = (ID) => {
+    return knex('Lessons').where('Lessons.ID',ID).del()
+};
+
+
+module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel}

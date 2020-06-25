@@ -30,3 +30,18 @@ knex.schema.hasTable('Lessons').then((exists) => {
     }
     return console.log('table is created!')
 });
+
+knex.schema.hasTable('parent').then((exists) => {
+    if (!exists) {
+        return knex.schema.createTable('parent', (table) => {
+            table.increments('ID')
+            table.integer("Lessons_ID").unsigned()
+            table.foreign("Lessons_ID").references("Lessons.ID")
+            table.string('child_moveTo_parent')
+        })
+        .catch((err) => {
+            console.log(err,"There is some err while writing the quety")
+        })
+    }
+    return console.log('table is created!')
+});

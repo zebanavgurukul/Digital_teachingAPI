@@ -70,5 +70,29 @@ Digital.get('/getLessons', (req,res) => {
     })
 });
 
+// 6
+
+// 7
+Digital.get("/moveToCart/:ID",(req,res)=>{
+    var ID = req.params.ID;
+    var getData = DigitalDB.moveToCart_ID(ID)
+    getData.then((data)=>{
+    let updataData = {
+       ID : data[0]['ID'],
+       Lessons_ID : data[0]['Teaching_ID'],
+       child_moveTo_parent : data[0]['child']
+    }
+    var inserted = DigitalDB.moveToCart(updataData)
+    inserted.then(()=>{
+            var deleted = DigitalDB.moveToCartdel(ID)
+            deleted.then(()=>{
+                res.send("Deleted...")
+            })
+        })
+    }).catch((err)=>{
+       res.send(err)
+    })
+});
+
 module.exports = Digital
 
