@@ -94,24 +94,28 @@ Digital.get("/moveToCart/:ID",(req,res) => {
     })
 });
 
-// 
+// 8
 Digital.get('/search/:search_value', (req,res) => {
     var search_value = req.params.search_value
     var data = DigitalDB.Search(search_value)
     data.then((Response)=>{
         var subject = Response[0]['subject']
         var ID = Response[0]['ID']
-        if ( subject == "Math"){
-            DigitalDB.get_Teaching_ID(ID)
-            .then((data) => {
-            list = []
-            for (let i = 0; i < data.length; i++){
-                var child = data[i]['child']
-                list.push(child)
+        DigitalDB.subject(search_value)
+        .then((Res) => {
+            var subject_search = Res[0]['subject']
+            if ( subject == subject_search){
+                DigitalDB.get_Teaching_ID(ID)
+                .then((data) => {
+                list = []
+                for (let i = 0; i < data.length; i++){
+                    var child = data[i]['child']
+                    list.push(child)
+                }
+                res.send(list)
+                })
             }
-            res.send(list)
-            })
-        }
+        })
     }).catch((err)=>{
        console.log(err)
        res.send(err)
