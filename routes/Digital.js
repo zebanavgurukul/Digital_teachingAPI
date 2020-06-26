@@ -107,9 +107,7 @@ Digital.get('/search/:search_value', (req,res) => {
             list = []
             for (let i = 0; i < data.length; i++){
                 var child = data[i]['child']
-                if(child != 0){
-                    list.push(child)
-                } 
+                list.push(child)
             }
             res.send(list)
             })
