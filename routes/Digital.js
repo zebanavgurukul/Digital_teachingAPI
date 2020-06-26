@@ -58,7 +58,7 @@ Digital.get('/rootnode/:ID', (req,res) => {
        console.log(err)
        res.send(err)
     })
- });
+});
 
 // 5
 Digital.get('/getLessons', (req,res) => {
@@ -73,23 +73,49 @@ Digital.get('/getLessons', (req,res) => {
 // 6
 
 // 7
-Digital.get("/moveToCart/:ID",(req,res)=>{
+Digital.get("/moveToCart/:ID",(req,res) => {
     var ID = req.params.ID;
     var getData = DigitalDB.moveToCart_ID(ID)
-    getData.then((data)=>{
+    getData.then((data) => {
     let updataData = {
        ID : data[0]['ID'],
        Lessons_ID : data[0]['Teaching_ID'],
        child_moveTo_parent : data[0]['child']
     }
     var inserted = DigitalDB.moveToCart(updataData)
-    inserted.then(()=>{
+    inserted.then(() => {
             var deleted = DigitalDB.moveToCartdel(ID)
-            deleted.then(()=>{
+            deleted.then(() => {
                 res.send("Deleted...")
             })
         })
     }).catch((err)=>{
+       res.send(err)
+    })
+});
+
+// 
+Digital.get('/search/:search_value', (req,res) => {
+    var search_value = req.params.search_value
+    var data = DigitalDB.Search(search_value)
+    data.then((Response)=>{
+        var subject = Response[0]['subject']
+        var ID = Response[0]['ID']
+        if ( subject == "Math"){
+            DigitalDB.get_Teaching_ID(ID)
+            .then((data) => {
+            list = []
+            for (let i = 0; i < data.length; i++){
+                var child = data[i]['child']
+                if(child != 0){
+                    list.push(child)
+                } 
+            }
+            res.send(list)
+            })
+        }
+    }).catch((err)=>{
+       console.log(err)
        res.send(err)
     })
 });

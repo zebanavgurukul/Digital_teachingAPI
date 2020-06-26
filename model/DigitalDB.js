@@ -49,5 +49,15 @@ let moveToCartdel = (ID) => {
     return knex('Lessons').where('Lessons.ID',ID).del()
 };
 
+// 
+let Search = (search_value) => {
+    return knex.select('*')
+    .from('Teaching')
+    .where('Teaching.subject','like',  '%' +search_value+ '%')
+};
 
-module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel}
+let get_Teaching_ID = (Teaching_ID) => {
+    return knex.select('*').from('Lessons').where('Lessons.Teaching_ID',Teaching_ID)
+};
+
+module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel,Search,get_Teaching_ID}
