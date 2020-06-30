@@ -64,4 +64,13 @@ let get_Teaching_ID = (Teaching_ID) => {
     return knex.select('*').from('Lessons').where('Lessons.Teaching_ID',Teaching_ID)
 };
 
-module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel,Search,subject,get_Teaching_ID}
+// 9
+let Lessonsget = (ID) => {
+    return knex.select('*').from('Lessons').where('Lessons.ID',ID)
+}
+
+let insert_children = (updata) => {
+    return knex('child_to_children').insert(updata)
+};
+
+module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel,Search,subject,get_Teaching_ID,Lessonsget,insert_children}

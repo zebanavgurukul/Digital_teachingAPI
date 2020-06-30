@@ -122,5 +122,26 @@ Digital.get('/search/:search_value', (req,res) => {
     })
 });
 
+// 9
+Digital.post('/insert/:ID',(req,res) => {
+    var ID = req.params.ID
+    DigitalDB.Lessonsget(ID)
+    .then((data) => {
+        var ID = data[0]['ID']
+        var updata = {
+            Lessons_ID: ID,
+            children: req.body.children,
+            children_child : req.body.children_child
+        }
+        DigitalDB.insert_children(updata)
+        .then(() => {
+            res.send('.....insert.....')
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    })
+});
+
 module.exports = Digital
 
