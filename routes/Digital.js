@@ -2,7 +2,7 @@ const express = require("express");
 const Digital = express();
 const DigitalDB   = require("../model/DigitalDB")
 
-// 1
+// 1 Create a parent
 Digital.post('/insert',(req,res) => {
     var updata = {
         Teacher: req.body.Teacher,
@@ -17,7 +17,7 @@ Digital.post('/insert',(req,res) => {
     })
 });
 
-// 2 
+// 2 Create a child
 Digital.post('/Lessonsinsert/:ID',(req,res) => {
     let ID = req.params.ID
     DigitalDB.getdata(ID)
@@ -37,7 +37,7 @@ Digital.post('/Lessonsinsert/:ID',(req,res) => {
     })
 });
 
-// 3
+// 3 Delete children
 Digital.delete('/delete/:search_value',(req,res) => {
     var search_value = req.params.search_value
     DigitalDB.Delete(search_value)
@@ -48,7 +48,7 @@ Digital.delete('/delete/:search_value',(req,res) => {
     })
 });
 
-// 4
+// 4 Get by ID
 Digital.get('/rootnode/:ID', (req,res) => {
     var ID = req.params.ID
     var data = DigitalDB.root_node(ID)
@@ -60,7 +60,7 @@ Digital.get('/rootnode/:ID', (req,res) => {
     })
 });
 
-// 5
+// 5 Get by All data
 Digital.get('/getLessons', (req,res) => {
     DigitalDB.get_Data()
     .then((Res) => {
@@ -70,9 +70,7 @@ Digital.get('/getLessons', (req,res) => {
     })
 });
 
-// 6
-
-// 7
+// 7 Move a child from another parent
 Digital.get("/moveToCart/:ID",(req,res) => {
     var ID = req.params.ID;
     var getData = DigitalDB.moveToCart_ID(ID)
@@ -94,7 +92,7 @@ Digital.get("/moveToCart/:ID",(req,res) => {
     })
 });
 
-// 8
+// 8 Search in the tree and get data
 Digital.get('/search/:search_value', (req,res) => {
     var search_value = req.params.search_value
     var data = DigitalDB.Search(search_value)
@@ -122,7 +120,7 @@ Digital.get('/search/:search_value', (req,res) => {
     })
 });
 
-// 9
+// 9 post data by ID and children
 Digital.post('/insert/:ID',(req,res) => {
     var ID = req.params.ID
     DigitalDB.Lessonsget(ID)
@@ -143,7 +141,7 @@ Digital.post('/insert/:ID',(req,res) => {
     })
 });
 
-// 10
+// 10 Search and get child
 Digital.get('/searchchild/:search_value', (req,res) => {
     var search_value = req.params.search_value
     var data = DigitalDB.Search_child(search_value)
@@ -169,6 +167,29 @@ Digital.get('/searchchild/:search_value', (req,res) => {
     }).catch((err)=>{
        console.log(err)
        res.send(err)
+    })
+});
+
+// 11 Search and get child data to child data
+Digital.get('/child_to_children/:ID',(req,res) => {
+    var ID = req.params.ID
+    DigitalDB.child_to_children_ID(ID)
+    .then((data) => {
+        var children_ID = data[0]['ID']
+        if ( ID == children_ID){
+            DigitalDB.get_children_child_ID(ID)
+            .then((data) => {
+            list = []
+            for (let i = 0; i < data.length; i++){
+                var children_child = data[i]['children_child']
+                list.push(children_child)
+            }
+        res.send(list)
+        })
+        }
+    }).catch((err)=>{
+        console.log(err)
+        res.send(err)
     })
 });
 

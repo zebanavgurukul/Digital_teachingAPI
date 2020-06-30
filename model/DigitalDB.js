@@ -34,8 +34,6 @@ let get_Data = () => {
     return knex.select('*').from('Lessons')
 }
 
-// 6
-
 // 7
 let moveToCart_ID = (ID) => {
     return knex('Lessons').where("ID",ID)
@@ -88,4 +86,13 @@ let get_child_ID = (Lessons_ID) => {
     return knex.select('*').from('child_to_children').where('child_to_children.Lessons_ID',Lessons_ID)
 };
 
-module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel,Search,subject,get_Teaching_ID,Lessonsget,insert_children,Search_child,childdata,get_child_ID}
+// 11
+let child_to_children_ID = (ID) => {
+    return knex.select('*').from('child_to_children').where('child_to_children.ID',ID)
+};
+
+let get_children_child_ID = (ID) => {
+    return knex.select('*').from('child_to_children').where('child_to_children.ID',ID)
+};
+
+module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel,Search,subject,get_Teaching_ID,Lessonsget,insert_children,Search_child,childdata,get_child_ID,child_to_children_ID,get_children_child_ID}
