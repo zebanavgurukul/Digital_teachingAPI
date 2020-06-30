@@ -73,4 +73,19 @@ let insert_children = (updata) => {
     return knex('child_to_children').insert(updata)
 };
 
-module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel,Search,subject,get_Teaching_ID,Lessonsget,insert_children}
+// 10
+let Search_child = (search_value) => {
+    return knex.select('*')
+    .from('Lessons')
+    .where('Lessons.child','like',  '%' +search_value+ '%')
+};
+
+let childdata = (subject) => {
+    return knex.select('*').from('Lessons').havingIn('Lessons.child',subject)
+};
+
+let get_child_ID = (Lessons_ID) => {
+    return knex.select('*').from('child_to_children').where('child_to_children.Lessons_ID',Lessons_ID)
+};
+
+module.exports = {insert_data,getdata,insert_Lessons,Delete,root_node,get_Data,moveToCart_ID,moveToCart,moveToCartdel,Search,subject,get_Teaching_ID,Lessonsget,insert_children,Search_child,childdata,get_child_ID}

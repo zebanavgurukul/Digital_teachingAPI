@@ -143,5 +143,34 @@ Digital.post('/insert/:ID',(req,res) => {
     })
 });
 
+// 10
+Digital.get('/searchchild/:search_value', (req,res) => {
+    var search_value = req.params.search_value
+    var data = DigitalDB.Search_child(search_value)
+    data.then((Response)=>{
+        var child = Response[0]['child']
+        var ID = Response[0]['ID']
+        DigitalDB.childdata(search_value)
+        .then((Res) => {
+            console.log(Res)
+            var childsearch = Res[0]['child']
+            if ( child == childsearch){
+                DigitalDB.get_child_ID(ID)
+                .then((data) => {
+                list = []
+                for (let i = 0; i < data.length; i++){
+                    var children = data[i]['children']
+                    list.push(children)
+                }
+                res.send(list)
+                })
+            }
+        })
+    }).catch((err)=>{
+       console.log(err)
+       res.send(err)
+    })
+});
+
 module.exports = Digital
 
