@@ -1,0 +1,53 @@
+<html>
+<head>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+function  data() {
+   let searchu = $('#usernameid').val()
+
+   if (searchu){
+      $.ajax({
+    url : `http://localhost:7000/Digital/search/${searchu}/`,
+    type : 'GET',
+    dataType: 'json',
+    async: false,
+    success : function(res) {
+       s = " "
+       if (res.length >= 1){
+         for(var i=0; i < res.length; i++){
+         s = s+" " +res[i]
+       }
+       }
+       else{
+          s = "No Record Found"
+       }
+      
+      $('h1').text(s);
+    },
+    error: function (textStatus, errorThrown) {
+       console.log(textStatus)
+       alert("fail")
+            
+        }
+   });
+   }
+}
+</script>
+
+</head>
+<body>
+   <div class="wrap">
+            <form class="search">
+                  <input type="text" id="usernameid" name="search" class="form-control" placeholder="username">
+
+               <button onclick="return data()"  class="searchButton">
+               Submit
+            </button>
+            </form>
+         </div>
+   
+   <h1></h1>
+   
+</body>
+</html>

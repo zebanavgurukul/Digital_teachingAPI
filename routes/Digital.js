@@ -94,6 +94,7 @@ Digital.get("/moveToCart/:ID",(req,res) => {
 
 // 8 Search in the tree and get data
 Digital.get('/search/:search_value', (req,res) => {
+
     var search_value = req.params.search_value
     var data = DigitalDB.Search(search_value)
     data.then((Response)=>{
@@ -110,7 +111,10 @@ Digital.get('/search/:search_value', (req,res) => {
                     var child = data[i]['child']
                     list.push(child)
                 }
+                console.log(list)
                 res.send(list)
+                }).catch((err) => {
+                    res.send(err)
                 })
             }
         })
