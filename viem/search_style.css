@@ -10,21 +10,15 @@ body{
 }
 
 input{
-  /* background-color: black; */
   height: 50px;
   width: 50%;
 
 }
 .searchButton {
   width: 120px;
-  background-color: black;
   height: 50px;
-  border: 1px solid #00B4CC;
   background: #00B4CC;
-  text-align: center;
   color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
   font-size: 20px;
 }
 
